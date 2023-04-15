@@ -12,3 +12,6 @@ statsmodels
 seaborn
 fbprophet
 protobuf
+setuptools
+wheel
+pip
