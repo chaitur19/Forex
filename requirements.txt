@@ -1,10 +1,11 @@
 streamlit
 pandas
-plotly.graph_objects
-tensorflow.keras.models import load_model
+plotly
+tensorflow
 numpy
 base64
-ylab import rcParams
+ylab
+rcParams
 PIL
 sklearn
 matplotlib
