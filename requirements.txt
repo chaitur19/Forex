@@ -10,7 +10,7 @@ pandas-datareader
 yfinance
 statsmodels
 seaborn
-fbprophet
+prophet
 setuptools
 wheel
 pip
