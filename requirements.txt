@@ -9,4 +9,3 @@ yfinance
 seaborn
 scikit-learn
 pandas_datareader
-statsmodels.tsa.seasonal
