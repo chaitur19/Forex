@@ -11,4 +11,4 @@ yfinance
 statsmodels
 seaborn
 fbprophet
---upgrade protobuf
+protobuf
