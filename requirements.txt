@@ -3,11 +3,9 @@ pandas
 plotly
 tensorflow
 numpy
-rcParams
 PIL
 sklearn
 matplotlib
-pandas_datareader
 yfinance
 seaborn
-
+MinMaxScaler
