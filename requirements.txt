@@ -1,7 +1,7 @@
 streamlit
 pandas
 plotly
-tensorflow==2.11.0
+tensorflow
 numpy
 Pillow
 scikit-learn
@@ -11,4 +11,4 @@ yfinance
 statsmodels
 seaborn
 fbprophet
-
+--upgrade protobuf
