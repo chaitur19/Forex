@@ -1,0 +1,14 @@
+streamlit
+pandas
+plotly.graph_objects
+tensorflow.keras.models import load_model
+numpy
+base64
+ylab import rcParams
+PIL
+sklearn
+matplotlib
+pandas_datareader
+yfinance
+seaborn
+
