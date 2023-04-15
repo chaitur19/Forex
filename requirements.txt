@@ -8,3 +8,4 @@ matplotlib
 yfinance
 seaborn
 scikit-learn
+pandas_datareader
