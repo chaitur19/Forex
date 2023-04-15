@@ -11,7 +11,7 @@ yfinance
 statsmodels
 seaborn
 fbprophet
-protobuf==3.20.0
+protobuf==3.19
 setuptools
 wheel
 pip
