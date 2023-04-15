@@ -1,7 +1,7 @@
 streamlit
 pandas
 plotly
-tensorflow
+tensorflow==2.11.0
 numpy
 Pillow
 scikit-learn
