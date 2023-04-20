@@ -18,3 +18,4 @@ pystan
 Cython
 protobuf==3.20.1
 selenium
+openpyxl
