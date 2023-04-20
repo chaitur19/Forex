@@ -74,10 +74,10 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
 
 
     # initializing chrome web driver
-    #driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
+    driver = webdriver.Chrome(executable_path='chromedriver.exe')
     #driver = webdriver.Chrome()
-    from webdriver_manager.chrome import ChromeDriverManager
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    #from webdriver_manager.chrome import ChromeDriverManager
+    #driver = webdriver.Chrome(ChromeDriverManager().install())
 
     #dummy=input("Input currency forex pair")
     currency="INR"
