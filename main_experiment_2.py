@@ -690,12 +690,15 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             table = soup.find_all("tr")[12:]
 
             currencies = [table[i].text.split("\n")[1:3][0] for i in range(len(table))]
+            st.write("currencies",currencies)
             currencies.insert(0, "date(y-m-d)")
             currencies.insert(1, "American Dollar")
             rates = [table[i].text.split("\n")[1:3][1] for i in range(len(table))]
+            st.write(rates)
             rates.insert(0, f"{year}-{month}-{day}")
             rates.insert(1, "1")
             curr_data = {currencies[i]: rates[i] for i in range(len(rates))}
+            st.write(curr_data)
             curr_data = pd.DataFrame(curr_data, index=[0])
             curr_data.to_csv("data.csv")
             cols = curr_data.columns
