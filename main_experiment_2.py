@@ -687,7 +687,7 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             st.write(page)
 
             soup = BeautifulSoup(page.content, "html.parser")
-            #st.write("soup", soup)
+            st.write(soup)
 
             table = soup.find_all("tr")[12:]
             st.write("table", table)
