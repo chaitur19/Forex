@@ -23,3 +23,4 @@ openpyxl
 webdriver-manager
 beautifulsoup4
 seleniumbase
+nltk
