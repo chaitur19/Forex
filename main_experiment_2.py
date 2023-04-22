@@ -674,12 +674,14 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             from prophet import Prophet
             from prophet.plot import plot_plotly
             today = datetime.date.today()
+            st.write(today)
 
             base_url = "https://www.x-rates.com/historical/?from=USD&amount=1&date"
 
             year = today.year
             month = today.month if today.month > 9 else f"0{today.month}"
             day = today.day if today.day > 9 else f"0{today.day}"
+            st.write(day)
 
             URL = f"{base_url}={year}-{month}-{day}"
             st.write(URL)
