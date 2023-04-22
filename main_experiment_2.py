@@ -62,13 +62,7 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
     from selenium.webdriver.chrome.options import Options
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
-    import pandas as pd
-    import time
-    import csv
 
-    # initializing chrome web driver
-    #driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
-    
     @st.experimental_singleton
     def get_driver():
         return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
@@ -79,145 +73,8 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
 
     driver = get_driver()
     driver.get("http://example.com")
+
     st.write(driver.page_source)
-
-    #st.code(driver.page_source)
-
-    #dummy=input("Input currency forex pair")
-    currency="INR"
-
-    searchList=['Politics','Congress','GDP','CPI','Gold+price','Employment','Parliament','Banks','Democrat','Bear+Market','Bull+run','NATO','G7','War','G20','Silicon+valley','Natural+gas+Price','White+House','Stock+market','Capital+market','Inflation','Oil+prices','Natural+Calamities','BJP','B20','Stress+testing']
-    searchList.insert(0, currency)
-
-    data=[]
-
-    #driver.close()
-
-    df=pd.DataFrame(data, columns=['Titles', 'Links', 'Details', 'Date', 'Publisher'])
-    #st.write(df)
-    # print(df.head())
-    df.to_csv('GoogleNews.csv')
-
-    df1=df
-    from datetime import date, datetime
-    today = datetime.today().strftime('%Y-%m-%d')
-
-    
-    import datetime as dt
-
-    df1['Date'] = df1['Date'].apply(lambda x: dt.datetime.today().strftime('%Y-%m-%d') if 'hour' in x or 'min' in x else (dt.datetime.today() - dt.timedelta(days=1)).strftime('%Y-%m-%d') if 'day ago' in x else (dt.datetime.today() - dt.timedelta(days=2)).strftime('%Y-%m-%d') if '2 days ago' in x else (dt.datetime.today() - dt.timedelta(days=3)).strftime('%Y-%m-%d') if '3 days ago' in x else (dt.datetime.today() - dt.timedelta(days=4)).strftime('%Y-%m-%d') if '4 days ago' in x else (dt.datetime.today() - dt.timedelta(days=5)).strftime('%Y-%m-%d') if '5 days ago' in x else (dt.datetime.today() - dt.timedelta(days=6)).strftime('%Y-%m-%d') if '6 days ago' in x else (dt.datetime.today() - dt.timedelta(days=7)).strftime('%Y-%m-%d') if '1 week ago' in x else x)
-    df1 = df1[~df1['Date'].str.contains('2022')]
-    df1 = df1[~df1['Date'].str.contains('weeks ago')]
-    df1 = df1[~df1['Date'].str.contains('month ago')]
-
-    df1 = df1.reset_index(drop=True)
-
-    df1 = df1[df1['Date'].str.contains('\d{4}-\d{2}-\d{2}')] # keep rows with date in YYYY-MM-DD format
-    df1['Date'].unique()
-
-    # assuming df1 is your dataframe,converting the 'Date' column from string to datetime format
-    df1['Date'] = pd.to_datetime(df1['Date'], infer_datetime_format=True)
-
-
-    import nltk
-    from nltk.sentiment.vader import SentimentIntensityAnalyzer
-    #!pip install langid
-    import langid
-
-    # Download the Vader lexicon and langid model
-    nltk.download('vader_lexicon')
-    langid.set_languages(['en', 'hi', 'fr', 'de', 'es', 'it', 'ja', 'ko', 'nl', 'pt', 'ru', 'zh', 'ar'])
-
-    # Filter out non-English titles using langid
-    #st.write(df1.columns)
-    df1['lang'] = df1['Titles'].apply(lambda x: langid.classify(x)[0])
-    df1 = df1[df1['lang'] == 'en']
-
-
-    # Extract the 'Title' column and convert it to a list
-    titles = df1['Titles'].tolist()
-
-    # Initialize the sentiment analyzer
-    analyzer = SentimentIntensityAnalyzer()
-
-    # Create an empty list to hold the sentiment scores
-    sentiment_scores = []
-    polarity=[]
-
-    # Perform sentiment analysis on each title
-    for title in titles:
-        # Analyze the sentiment of the title using Vader lexicon
-        sentiment = analyzer.polarity_scores(title)
-
-        sentiment_scores.append(sentiment['compound'])
-        
-        # Determine the sentiment label based on the compound score
-        if sentiment['compound'] > 0:
-            sentiment_label = 'positive'
-        elif sentiment['compound'] < 0:
-            sentiment_label = 'negative'
-        else:
-            sentiment_label = 'neutral'
-        
-        # Append the sentiment label to the list
-        polarity.append(sentiment_label)
-
-    # Add the sentiment scores to the dataframe as a new column
-    df1['sentiment_value'] = sentiment_scores
-    df1['polarity'] = polarity
-
-    
-
-    # Output the modified dataframe to a new CSV file
-    df1.drop(['Links', 'Publisher', 'lang'], axis=1, inplace=True)
-    df1=df1[['Date','Titles', 'sentiment_value','polarity']]
-
-    st.subheader('News Data and Sentiment')
-    st.write(df1)
-    #df1.to_csv('sentiment_scores.csv', index=False)
-
-     # Calculate sentiment score for each date
-    grouped = df1.groupby('Date')
-
-    sentiment_by_date = grouped.agg({'Titles': 'count', 'sentiment_value': 'mean'})
-
-    sentiment_by_date.drop(['Titles'], axis=1, inplace=True)
-
-    #st.write(sentiment_by_date)
-
-
-    for itr in currency_pair_list:
-        if currencypair == itr:
-            #data = yf.download(tickers='USDCAD=X', period='max', interval='1d')
-            data = pdr.get_data_yahoo(itr + '=X', start='2010-01-01', interval='1D')
-            data.drop('Volume', axis=1, inplace=True)
-            st.subheader("Daily forex Data")
-            #data.merge(sentiment_by_date)
-            data2 = pd.merge(data, sentiment_by_date, on='Date')
-            st.write(data2.tail(10))
-            #data_fb = data[data.index.year == pd.to_datetime("now").year]
-            data_fb = data[data.index.year >= (pd.to_datetime("now").year-2)]
-            #data_fb = data.copy()
-            data_fb = data_fb.reset_index()
-            data_fb = data_fb[['Date','Close']]
-
-            df = pd.DataFrame()
-            df['ds'] = pd.to_datetime(data_fb['Date'])
-            df['y'] = data_fb['Close']
-            df.head()
-
-            m = Prophet()
-            m.fit(df)
-
-            future = m.make_future_dataframe(periods=6, freq='M')
-
-            forecast = m.predict(future)
-            forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper', 'trend', 'trend_lower', 'trend_upper']].tail()
-            fig3 = m.plot(forecast, xlabel='Date', ylabel='Value')
-            st.subheader("Predictions")
-            st.write(fig3)
-    #a = add_changepoints_to_plot(fig3.gca(), m, forecast)
-    #candle_stick_chart(df)
 
 
 def candle_stick_chart(data_ytd):
