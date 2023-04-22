@@ -60,7 +60,7 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
     
     with st.echo():
         
-    from selenium import webdriver
+    #from selenium import webdriver
     import time
     from selenium.common.exceptions import TimeoutException
     from selenium.webdriver.support.ui import WebDriverWait
