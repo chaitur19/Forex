@@ -72,7 +72,7 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
     options.add_argument('--headless')
 
     driver = get_driver()
-    driver.get("http://example.com")
+    driver.get("example.com")
 
     st.write(driver.page_source)
 
