@@ -58,64 +58,62 @@ div[class*="stSelectbox"] > label > div[data-testid="stMarkdownContainer"] > p {
 
 def sentiment_analyis_prediction(currencypair, currency_pair_list):
     
-    with st.echo():
-        
-        from selenium import webdriver
-        import time
-        from selenium.common.exceptions import TimeoutException
-        from selenium.webdriver.support.ui import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
-        from selenium.webdriver.common.by import By
-        from selenium.webdriver.common.keys import Keys
-        import pandas as pd
-        import time
-        import csv
+    from selenium import webdriver
+    import time
+    from selenium.common.exceptions import TimeoutException
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.common.keys import Keys
+    import pandas as pd
+    import time
+    import csv
 
-        from selenium import webdriver
-        from selenium.webdriver.chrome.options import Options
-        from selenium.webdriver.chrome.service import Service
-        from webdriver_manager.chrome import ChromeDriverManager
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.chrome import ChromeDriverManager
 
 
-        # initializing chrome web driver
-        #driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
+    # initializing chrome web driver
+    #driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
 
-        @st.experimental_singleton
-        def get_driver():
-            return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    @st.experimental_singleton
+    def get_driver():
+        return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-        options = Options()
-        options.add_argument('--disable-gpu')
-        options.add_argument('--headless')
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
 
-        driver = get_driver()
-        #driver.get('http://example.com')
+    driver = get_driver()
+    #driver.get('http://example.com')
 
-        #st.code(driver.page_source)
+    #st.code(driver.page_source)
 
-        #dummy=input("Input currency forex pair")
-        currency="INR"
+    #dummy=input("Input currency forex pair")
+    currency="INR"
 
-        searchList=['Politics','Congress','GDP','CPI','Gold+price','Employment','Parliament','Banks','Democrat','Bear+Market','Bull+run','NATO','G7','War','G20','Silicon+valley','Natural+gas+Price','White+House','Stock+market','Capital+market','Inflation','Oil+prices','Natural+Calamities','BJP','B20','Stress+testing']
-        searchList.insert(0, currency)
+    searchList=['Politics','Congress','GDP','CPI','Gold+price','Employment','Parliament','Banks','Democrat','Bear+Market','Bull+run','NATO','G7','War','G20','Silicon+valley','Natural+gas+Price','White+House','Stock+market','Capital+market','Inflation','Oil+prices','Natural+Calamities','BJP','B20','Stress+testing']
+    searchList.insert(0, currency)
 
-        data=[]
-        for i in searchList:
+    data=[]
+    for i in searchList:
 
 
-            resp=driver.get('https://www.google.com/search?q='+i+'&authuser=0&tbm=nws&sxsrf=APwXEddvFjyX-E3Jv6SMNq5CWpM-X9jFSg:1681868177846&ei=kUU_ZJOXM8_cptQPkoOQmA8&start=20&sa=N&ved=2ahUKEwjTo7Ka57T-AhVProkEHZIBBPM4ChDy0wN6BAgFEAc&biw=1036&bih=909&dpr=1.02')
+        resp=driver.get('https://www.google.com/search?q='+i+'&authuser=0&tbm=nws&sxsrf=APwXEddvFjyX-E3Jv6SMNq5CWpM-X9jFSg:1681868177846&ei=kUU_ZJOXM8_cptQPkoOQmA8&start=20&sa=N&ved=2ahUKEwjTo7Ka57T-AhVProkEHZIBBPM4ChDy0wN6BAgFEAc&biw=1036&bih=909&dpr=1.02')
 
-            dv = driver.find_elements("xpath", '//div[@class="SoaBEf"]')
-            for element in dv:
-                title= element.find_element("xpath", './/div[@class="mCBkyc ynAwRc MBeuO nDgy9d"]')
-                link = element.find_element("xpath", './/div/a')
-                des = element.find_element("xpath", './/div[@class="GI74Re nDgy9d"]')
-                date = element.find_element("xpath", './/div[@class="OSrXXb ZE0LJd YsWzw"]')
-                publisher=element.find_element("xpath", './/div[@class="CEMjEf NUnG9d"]')
+        dv = driver.find_elements("xpath", '//div[@class="SoaBEf"]')
+        for element in dv:
+            title= element.find_element("xpath", './/div[@class="mCBkyc ynAwRc MBeuO nDgy9d"]')
+            link = element.find_element("xpath", './/div/a')
+            des = element.find_element("xpath", './/div[@class="GI74Re nDgy9d"]')
+            date = element.find_element("xpath", './/div[@class="OSrXXb ZE0LJd YsWzw"]')
+            publisher=element.find_element("xpath", './/div[@class="CEMjEf NUnG9d"]')
 
-                data.append([title.text, link.get_attribute('href'), des.text, date.text, publisher.text])
+            data.append([title.text, link.get_attribute('href'), des.text, date.text, publisher.text])
 
-        driver.close()
+    driver.close()
 
     df=pd.DataFrame(data, columns=['Titles', 'Links', 'Details', 'Date', 'Publisher'])
     #st.write(df)
