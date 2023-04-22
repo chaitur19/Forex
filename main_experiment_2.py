@@ -682,7 +682,7 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             day = today.day if today.day > 9 else f"0{today.day}"
 
             URL = f"{base_url}={year}-{month}-{day}"
-
+            st.write(URL)
             page = requests.get(URL)
             st.write(page)
 
