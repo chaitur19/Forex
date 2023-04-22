@@ -704,6 +704,9 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
 
 
         daily_df, columns = scrape_currency()
+        st.write(daily_df)
+        st.write("*******************************************************")
+        st.write(columns)
         input = st.sidebar.number_input('Amount', value=1)
         base_curr = st.sidebar.selectbox("Select the base currency", columns)
         selected_curr = st.sidebar.multiselect("Select currencies", columns)
