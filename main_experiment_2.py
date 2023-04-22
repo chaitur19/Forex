@@ -36,6 +36,11 @@ import pandas as pd
 import time
 import csv
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 
 USDINR_model = load_model("USDINR_model.h5")
@@ -74,7 +79,20 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
 
 
     # initializing chrome web driver
-    driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
+    #driver = webdriver.Chrome(executable_path='chromedriver_win32/chromedriver.exe')
+    
+    @st.experimental_singleton
+    def get_driver():
+        return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+    options = Options()
+    options.add_argument('--disable-gpu')
+    options.add_argument('--headless')
+
+    driver = get_driver()
+    #driver.get('http://example.com')
+
+    #st.code(driver.page_source)
 
     #dummy=input("Input currency forex pair")
     currency="INR"
