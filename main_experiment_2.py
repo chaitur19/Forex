@@ -686,8 +686,10 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             page = requests.get(URL)
 
             soup = BeautifulSoup(page.content, "html.parser")
+            st.write("soup", soup)
 
             table = soup.find_all("tr")[12:]
+            st.write("table", table)
 
             currencies = [table[i].text.split("\n")[1:3][0] for i in range(len(table))]
             st.write("currencies",currencies)
