@@ -90,19 +90,6 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
     searchList.insert(0, currency)
 
     data=[]
-    for i in searchList:
-        
-        #resp=driver.get('https://www.google.com/search?q='+i+'&authuser=0&tbm=nws&sxsrf=APwXEddvFjyX-E3Jv6SMNq5CWpM-X9jFSg:1681868177846&ei=kUU_ZJOXM8_cptQPkoOQmA8&start=20&sa=N&ved=2ahUKEwjTo7Ka57T-AhVProkEHZIBBPM4ChDy0wN6BAgFEAc&biw=1036&bih=909&dpr=1.02')
-        #driver.get('http://www.example.com')
-        dv = driver.find_elements("xpath", '//div[@class="SoaBEf"]')
-        for element in dv:
-            title= element.find_element("xpath", './/div[@class="mCBkyc ynAwRc MBeuO nDgy9d"]')
-            link = element.find_element("xpath", './/div/a')
-            des = element.find_element("xpath", './/div[@class="GI74Re nDgy9d"]')
-            date = element.find_element("xpath", './/div[@class="OSrXXb ZE0LJd YsWzw"]')
-            publisher=element.find_element("xpath", './/div[@class="CEMjEf NUnG9d"]')
-
-            data.append([title.text, link.get_attribute('href'), des.text, date.text, publisher.text])
 
     #driver.close()
 
