@@ -69,7 +69,7 @@ def sentiment_analyis_prediction(currencypair, currency_pair_list):
     driver = get_driver()
     #driver.get('http://example.com')
 
-    st.code(driver.page_source)
+    #st.code(driver.page_source)
 
     #dummy=input("Input currency forex pair")
     currency="INR"
