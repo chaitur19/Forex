@@ -674,7 +674,6 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             from prophet import Prophet
             from prophet.plot import plot_plotly
             today = datetime.date.today()
-            st.write(today)
 
             base_url = "https://www.x-rates.com/historical/?from=USD&amount=1&date"
 
@@ -703,7 +702,7 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             rates.insert(0, f"{year}-{month}-{day}")
             rates.insert(1, "1")
             curr_data = {currencies[i]: rates[i] for i in range(len(rates))}
-            st.write(curr_data)
+            #st.write(curr_data)
             curr_data = pd.DataFrame(curr_data, index=[0])
             curr_data.to_csv("data.csv")
             cols = curr_data.columns
