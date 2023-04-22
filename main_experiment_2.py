@@ -684,9 +684,10 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             URL = f"{base_url}={year}-{month}-{day}"
 
             page = requests.get(URL)
+            st.write(page)
 
             soup = BeautifulSoup(page.content, "html.parser")
-            st.write("soup", soup)
+            #st.write("soup", soup)
 
             table = soup.find_all("tr")[12:]
             st.write("table", table)
