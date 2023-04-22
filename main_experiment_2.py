@@ -682,24 +682,24 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
             month = today.month if today.month > 9 else f"0{today.month}"
             day = today.day if today.day > 9 else f"0{today.day}"
             day = day-1
-            st.write(day)
+            #st.write(day)
 
             URL = f"{base_url}={year}-{month}-{day}"
-            st.write(URL)
+            #st.write(URL)
             page = requests.get(URL)
-            st.write(page)
+            #st.write(page)
 
             soup = BeautifulSoup(page.content, "html.parser")
 
             table = soup.find_all("tr")[12:]
-            st.write("table", table)
+            #st.write("table", table)
 
             currencies = [table[i].text.split("\n")[1:3][0] for i in range(len(table))]
-            st.write("currencies",currencies)
+            #st.write("currencies",currencies)
             currencies.insert(0, "date(y-m-d)")
             currencies.insert(1, "American Dollar")
             rates = [table[i].text.split("\n")[1:3][1] for i in range(len(table))]
-            st.write(rates)
+            #st.write(rates)
             rates.insert(0, f"{year}-{month}-{day}")
             rates.insert(1, "1")
             curr_data = {currencies[i]: rates[i] for i in range(len(rates))}
@@ -712,9 +712,7 @@ div[class*="stRadio"] > label > div[data-testid="stMarkdownContainer"] > p {font
 
 
         daily_df, columns = scrape_currency()
-        st.write(daily_df)
-        st.write("*******************************************************")
-        st.write(columns)
+        
         input = st.sidebar.number_input('Amount', value=1)
         base_curr = st.sidebar.selectbox("Select the base currency", columns)
         selected_curr = st.sidebar.multiselect("Select currencies", columns)
